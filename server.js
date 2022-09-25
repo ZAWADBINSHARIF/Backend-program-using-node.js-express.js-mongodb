@@ -38,7 +38,9 @@ let serverFile = async (filePath, contentType, response) => {
 const server = http.createServer((req, res) => {
     let contentType;
     let extention = path.extname(req.url);
+
     myEmitter.emit('log', `${req.url}\t${req.method}`, 'reqLog.txt');
+
     switch (extention) {
         case '.css':
             contentType = 'text/css';
@@ -63,7 +65,6 @@ const server = http.createServer((req, res) => {
             break;
     };
 
-
     let filePath =
         contentType === 'text/html' && req.url === '/'
             ? path.join(__dirname, 'view', 'index.html')
@@ -83,19 +84,14 @@ const server = http.createServer((req, res) => {
         console.log(path.parse(filePath).base);
         switch (path.parse(filePath).base) {
             case 'old-page.html':
-                // old-page
                 res.writeHead(301, { 'Location': '/new-page.html' });
                 res.end();
                 break;
             default:
-                // 404 page
                 serverFile(path.join(__dirname, 'view', '404.html'), 'text/html', res)
                 break;
         }
     }
-
-    console.log(req.url, '\n', filePath)
-
 });
 
 server.listen(PORT, () => console.log(`Server on running : ${PORT}`));
