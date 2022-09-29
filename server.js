@@ -1,97 +1,80 @@
-const http = require('http');
-const fs = require('fs')
-const fsPromises = require('fs').promises
+const express = require('express');
+const app = express();
 const path = require('path');
-const eventEmitter = require('events');
-const logEvent = require('./logEvents.js');
-
+const cors = require('cors');
+const { logger } = require('./middleware/logEvents');
 const PORT = process.env.PORT || 3500;
 
-class Emitter extends eventEmitter { };
-const myEmitter = new Emitter();
+// custom middleware logger
+app.use(logger);
 
-myEmitter.on('log', (msg, fileName) => logEvent(msg, fileName));
-
-let serverFile = async (filePath, contentType, response) => {
-    try {
-        const rowData = await fsPromises.readFile(
-            filePath,
-            !contentType.includes('image')
-                ? 'utf8' : '');
-        const data = contentType === 'application/json'
-            ? JSON.parse(rowData)
-            : rowData;
-        response.writeHead(
-            filePath.includes('404.html') ? 404 : 200,
-            { 'Content-Type': contentType });
-        response.end(contentType === 'application/json'
-            ? JSON.stringify(rowData)
-            : rowData);
-    } catch (err) {
-        myEmitter.emit('log', `${err.name} : ${err.message}`, 'errorLog.txt');
-        response.statusCode = 500;
-        response.end();
-    }
-
-}
-
-const server = http.createServer((req, res) => {
-    let contentType;
-    let extention = path.extname(req.url);
-
-    myEmitter.emit('log', `${req.url}\t${req.method}`, 'reqLog.txt');
-
-    switch (extention) {
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-        case '.jpg':
-            contentType = 'image/jpg';
-            break;
-        case '.txt':
-            contentType = 'text/plain';
-            break;
-        default:
-            contentType = 'text/html';
-            break;
-    };
-
-    let filePath =
-        contentType === 'text/html' && req.url === '/'
-            ? path.join(__dirname, 'view', 'index.html')
-            : contentType === 'text/html' && req.url.slice(-1) === '/'
-                ? path.join(__dirname, 'view', req.url, 'index.html')
-                : contentType === 'text/html'
-                    ? path.join(__dirname, 'view', req.url)
-                    : path.join(__dirname, req.url);
-
-    if (!extention && req.url.slice(-1) !== '/') filePath += '.html';
-
-    let fileExists = fs.existsSync(filePath)
-
-    if (fileExists) {
-        serverFile(filePath, contentType, res)
-    } else {
-        console.log(path.parse(filePath).base);
-        switch (path.parse(filePath).base) {
-            case 'old-page.html':
-                res.writeHead(301, { 'Location': '/new-page.html' });
-                res.end();
-                break;
-            default:
-                serverFile(path.join(__dirname, 'view', '404.html'), 'text/html', res)
-                break;
+// Cross Origin Resource Sharing
+const whiteList = ['https://www.yourwebsite.com', 'http://127.0.0.1:5500', 'http://localhost:3500'];
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (whiteList.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Erorr('Not allowed by cross'));
         }
-    }
+    },
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// built-in middleware to handle urlencoded data
+// in other words, form data:  
+// ‘content-type: application/x-www-form-urlencoded’
+app.use(express.urlencoded({ extended: false }));
+
+// built-in middleware for json 
+app.use(express.json());
+
+//serve static files
+app.use(express.static(path.join(__dirname, '/public')));
+
+app.get('^/$|/index(.html)?', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-server.listen(PORT, () => console.log(`Server on running : ${PORT}`));
+app.get('/new-page(.html)?', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'new-page.html'));
+});
+
+app.get('/old-page(.html)?', (req, res) => {
+    res.redirect(301, '/new-page.html'); //302 by default
+});
+
+// Route handlers
+app.get('/hello(.html)?', (req, res, next) => {
+    console.log('attempted to load hello.html');
+    next()
+}, (req, res) => {
+    res.send('Hello World!');
+});
+
+
+// chaining route handlers
+const one = (req, res, next) => {
+    console.log('one');
+    next();
+}
+
+const two = (req, res, next) => {
+    console.log('two');
+    next();
+}
+
+const three = (req, res) => {
+    console.log('three');
+    res.send('Finished!');
+}
+
+app.get('/chain(.html)?', [one, two, three]);
+
+app.all('*', (req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
