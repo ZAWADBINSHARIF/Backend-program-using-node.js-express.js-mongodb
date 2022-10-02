@@ -37,9 +37,11 @@ const updateEmployee = (req, res) => {
 };
 
 const deleteEmployee = (req, res) => {
-    res.json({
-        "id": req.body.id
-    });
+    const employee = data.employees?.find(employee => employee.id === parseInt(req.body.id));
+    if (!employee) return res.status(400).json({ 'message': `Employee id ${req.body.id} not found` });
+    const filterArray = data.employees.filter(employee => employee.id !== parseInt(req.body.id));
+    data.setEmployee(filterArray);
+    res.json(data.employees);
 };
 
 const getEmployee = (req, res) => {
