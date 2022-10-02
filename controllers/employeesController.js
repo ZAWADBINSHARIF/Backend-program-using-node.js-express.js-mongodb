@@ -31,7 +31,7 @@ const updateEmployee = (req, res) => {
     if (req.body.city) employee.city = req.body.city;
     const filterArray = data.employees.filter(employee => employee.id !== req.body.id);
     const unsortedArray = [...filterArray, employee];
-    const sortedArray = unsortedArray.sort((a, b) => a.id > b.id ? 1 : a.id < b.id ? -1 : 0);
+    const sortedArray = unsortedArray.sort((a, b) => a.id - b.id);
     data.setEmployee(sortedArray)
     res.json(data.employees);
 };
