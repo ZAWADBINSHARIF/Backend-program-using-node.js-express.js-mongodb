@@ -5,7 +5,6 @@ const userDB = {
     users: require('../model/users.json'),
     setUsers: function (person) { this.users = person }
 };
-
 const handleRefreshToken = (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(401); // unauthorized
