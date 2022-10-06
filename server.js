@@ -33,6 +33,7 @@ app.use('/', require('./routers/root.js'));
 app.use('/register', require('./routers/register.js'));
 app.use('/authLogin', require('./routers/auth.js'));
 app.use('/refresh', require('./routers/refresh.js'));
+app.use('/logout', require('./routers/logout.js'));
 app.use(verifyJWT);
 app.use('/employees', require('./routers/api/employees.js'));
 
