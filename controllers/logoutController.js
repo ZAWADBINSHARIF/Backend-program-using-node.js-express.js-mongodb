@@ -21,7 +21,7 @@ const handleLogout = async (req, res) => {
     const currentUser = { ...foundUser, refreshToken: '' };
     userDB.setUsers([...otherUsers, currentUser]);
     await fsPromises.writeFile(path.join(__dirname, '..', 'model', 'users.json'), JSON.stringify(userDB.users));
-    res.clearCookie('jwt', { httpOnly: true });
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     res.sendStatus(204) // no content send for this request
 };
 

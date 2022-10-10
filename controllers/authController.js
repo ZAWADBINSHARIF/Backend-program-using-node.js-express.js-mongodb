@@ -33,7 +33,7 @@ const handleLogin = async (req, res) => {
             userDB.setUsers([...otherUsers, currentUser]);
 
             await fsPromises.writeFile(path.join(__dirname, '..', 'model', 'users.json'), JSON.stringify(userDB.users));
-            res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
             res.json({ accessToken });
         } else {
             res.status(401).json({ message: 'Invalid username or password' });
