@@ -9,6 +9,7 @@ const corsOptions = require('./config/corsOptions');
 const verifyJWT = require('./middleware/verifyJWT');
 const credentials = require('./middleware/credentials');
 const PORT = process.env.PORT || 3500;
+require('dotenv').config();
 
 // custom middleware logger
 app.use(logger);

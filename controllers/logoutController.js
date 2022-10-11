@@ -1,7 +1,5 @@
-const jwt = require('jsonwebtoken');
 const path = require('path');
 const fsPromises = require('fs').promises;
-require('dotenv').config();
 
 const userDB = {
     users: require('../model/users.json'),
@@ -21,7 +19,7 @@ const handleLogout = async (req, res) => {
     const currentUser = { ...foundUser, refreshToken: '' };
     userDB.setUsers([...otherUsers, currentUser]);
     await fsPromises.writeFile(path.join(__dirname, '..', 'model', 'users.json'), JSON.stringify(userDB.users));
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None' });
     res.sendStatus(204) // no content send for this request
 };
 

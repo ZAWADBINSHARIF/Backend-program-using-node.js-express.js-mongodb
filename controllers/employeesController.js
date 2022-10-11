@@ -10,13 +10,13 @@ const getAllEmployees = (req, res) => {
 const createNewEmployee = (req, res) => {
     const newEmployee = {
         id: data.employees?.length ? data.employees[data.employees.length - 1].id + 1 : 1,
-        employeeName: req.body.name,
+        name: req.body.name,
         city: req.body.city
     };
 
-    if (!newEmployee.employeeName || !newEmployee.city) {
+    if (!newEmployee.name || !newEmployee.city) {
         return res.status(400).json({
-            'message': 'employeeName and city are required'
+            'message': 'name and city are required'
         });
     };
 
