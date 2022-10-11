@@ -1,1 +1,16 @@
-[{"username":"zawad","password":"$2b$10$.5Q8WaET/8OSQoFF13PEu.YebW2wMTdqNCGuQce0ZRw/RviHHumsO","refreshToken":""},{"username":"sharif","password":"$2b$10$CGIv/HLnCxCEPv36CWSepusGmLPdB.QTTsbBGlq3MpO2Qn.fA0JVG","refreshToken":""}]
+[
+  {
+    "username": "zawad",
+    "password": "$2b$10$.5Q8WaET/8OSQoFF13PEu.YebW2wMTdqNCGuQce0ZRw/RviHHumsO",
+    "refreshToken": ""
+  },
+  {
+    "username": "zayan",
+    "password": "$2b$10$BXRqgD84JypJCee91khR6OoZRjXIhBCzn7yFLU9MbivsDxz6S6pcW"
+  },
+  {
+    "username": "sharif",
+    "password": "$2b$10$CGIv/HLnCxCEPv36CWSepusGmLPdB.QTTsbBGlq3MpO2Qn.fA0JVG",
+    "refreshToken": ""
+  }
+]

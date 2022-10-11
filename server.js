@@ -8,7 +8,6 @@ const errorHandler = require('./middleware/errorHandler');
 const corsOptions = require('./config/corsOptions');
 const verifyJWT = require('./middleware/verifyJWT');
 const credentials = require('./middleware/credentials');
-const { appendFile } = require('fs/promises');
 const PORT = process.env.PORT || 3500;
 
 // custom middleware logger
