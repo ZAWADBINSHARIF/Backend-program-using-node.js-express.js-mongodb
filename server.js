@@ -39,7 +39,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 // Routes
 app.use('/', require('./routers/root.js'));
 app.use('/register', require('./routers/register.js'));
-app.use('/authLogin', require('./routers/auth.js'));
+app.use('/authLogin', require('./routers/login.js'));
 app.use('/refresh', require('./routers/refresh.js'));
 app.use('/logout', require('./routers/logout.js'));
 app.use(verifyJWT);
