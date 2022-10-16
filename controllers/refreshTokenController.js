@@ -1,3 +1,5 @@
+'use strict';
+
 const jwt = require('jsonwebToken');
 const User = require('../model/User.js');
 

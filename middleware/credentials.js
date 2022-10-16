@@ -1,3 +1,5 @@
+'use strict';
+
 const allowedOrigins = require('../config/allowedOrigin.js');
 
 const credentials = (req, res, next) => {

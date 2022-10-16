@@ -1,3 +1,5 @@
+'use strict';
+
 const allowedOrigins = require('./allowedOrigin.js');
 
 const corsOptions = {

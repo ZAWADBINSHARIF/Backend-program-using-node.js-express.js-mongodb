@@ -1,3 +1,5 @@
+'use strict';
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../model/User.js');
@@ -29,7 +31,7 @@ const handleLogin = async (req, res) => {
             )
             // create a new field called refreshToken
             foundUser.refreshToken = refreshToken;
-            await foundUser.save()          
+            await foundUser.save()
 
             res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
             res.json({ accessToken });

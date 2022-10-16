@@ -1,3 +1,5 @@
+'use strict';
+
 const roles_list = {
     "admin": 5001,
     "editor": 4001,

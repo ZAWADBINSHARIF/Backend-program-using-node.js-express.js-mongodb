@@ -1,3 +1,5 @@
+'use strict';
+
 const { logEvents } = require('./logEvents.js');
 
 const errorHandler = (err, req, res, next) => {

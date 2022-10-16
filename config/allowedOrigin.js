@@ -1,3 +1,5 @@
+'use strict';
+
 const allowedOrigins = [
     'https://www.yourwebsite.com',
     'http://127.0.0.1:5500',

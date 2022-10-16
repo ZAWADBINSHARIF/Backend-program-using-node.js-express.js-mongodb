@@ -1,3 +1,5 @@
+'use strict';
+
 const User = require('../model/User.js');
 
 const handleLogout = async (req, res) => {

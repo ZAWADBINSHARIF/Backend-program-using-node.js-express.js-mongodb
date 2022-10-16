@@ -1,3 +1,5 @@
+'use strict';
+
 const Employee = require('../model/Employee.js');
 
 const getAllEmployees = async (req, res) => {
