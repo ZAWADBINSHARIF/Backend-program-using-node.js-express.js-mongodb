@@ -1,7 +1,7 @@
 {
-  "name": "build_webserver",
+  "name": "backend_website_men",
   "version": "1.0.0",
-  "description": "Build A Webserver With node js and without express js",
+  "description": "Build a backend_website_mrn. men means m for Mongodb, e for express.js and n for node.js. I'm using MVC and JWT (json web token)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -23,5 +23,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "uuid": "^9.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZAWADBINSHARIF/Backend-program-using-node.js-express.js-mongodb"
+  },
+  "bugs": {
+    "url": "https://github.com/ZAWADBINSHARIF/Backend-program-using-node.js-express.js-mongodb/issues"
+  },
+  "homepage": "https://github.com/ZAWADBINSHARIF/Backend-program-using-node.js-express.js-mongodb#readme"
 }
