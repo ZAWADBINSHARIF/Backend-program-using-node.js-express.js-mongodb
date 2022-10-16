@@ -1,6 +1,6 @@
 'use strict';
 
-const jwt = require('jsonwebToken');
+const jwt = require('jsonwebtoken');
 const User = require('../model/User.js');
 
 const handleRefreshToken = async (req, res) => {
